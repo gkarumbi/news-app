@@ -1,6 +1,9 @@
 from app import app
 import urllib.request,json
 from .models import source
+from .models import article
+
+Article = article.Article
 
 Source = source.Source
 
@@ -10,6 +13,9 @@ api_key = app.config['NEWS_API_KEY']
 #Getting source url
 
 source_url = app.config["NEWS_SOURCE_URL"]
+
+#Getting topic url
+topic_url =
 
 def get_news_source():
     '''
@@ -82,3 +88,22 @@ def process_articles_results(news):
             article_source_results.append(article_objects)
 
     return article_source_results
+
+
+def get_news_by_topic(topic_name):
+    '''
+    function that gets the response to the category json
+    '''
+    get_topic_url = topic_url.format(topic_name,api_key)
+    print(get_topic_url)
+    with urllib.request.urlopen(get_topic_url) as url:
+        get_topic_data = url.read()
+        get_topic_response = json.loads(get_topic_data)
+
+        get_topicy_results = None
+
+        if get_topic_response['articles']:
+            get_topic_list = get_topic_response['articles']
+            get_topic_results = process_articles_results(get_topic_list)
+
+    return get_topic_results
