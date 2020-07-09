@@ -1,14 +1,15 @@
-from app import app
+
 import urllib.request,json
 from .models import Source
 from .models import Article
 from .models import Topic
-from .models import Headline 
+from .models import Headline
 
+""" 
 Article = article.Article
 Source = source.Source
 Headline = headline.Headline
-Topic = topic.Topic
+Topic = topic.Topic """
 
 # Getting api key
 api_key = None

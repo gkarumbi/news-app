@@ -1,18 +1,23 @@
 {% extends 'base.html'%}
+<!-- Styles block -->
 
+{% block styles%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+{% endblock %}
 <!-- Content Block -->
 {% block content%}
   
     
 
     
-        <h1> {{uhondo}} </h1>
+        <!-- <h1> {{uhondo}} </h1> -->
         <div class="container">
             <div class="row main-row">
                 <div class="col-md-3 sources-column">
                     <div class="card-column">
                         <div class="card-header">
-                            <h3>All our news sources</h3>
+                            <h3>    Browse By News Sources</h3>
                         </div>
                         <div class="list-group list-group-flush scrolly">
                             <ul>
@@ -31,7 +36,7 @@
                     <div class="container">
                         {% for trending in trending_in_html%}
                         <div class="card">
-                            <img src="{{trending.image}}" alt="" size="100px180">
+                            <img class ="img-fluid"src="{{trending.image}}" alt="" sizes="50x50">
                             <div class="card-body">
                                 <h4 class="card-title">{{trending.author}}</h4>
                                 <p class="card-text">{{trending.description}}</p>

@@ -1,0 +1,31 @@
+
+{% extends 'base.html'%} 
+{% block content %}
+
+
+<body>
+    <br>
+    <br>
+    <h1 class="text-center" class="text-uppercase">{{topic}} NEWS </h3>
+    <div class="container">
+    <div class="card-columns">
+        {% for topic in topic_in_html %}
+
+        <div class="card">
+            <img class="card" src="{topic.image}}" alt="" size="100x180">
+            <div class="card-body">
+            <h5 class="card-title">{{topic.author}}</h5>
+            <p class="card-text">{{topic.description}}</p>
+            <a href="{{topic.url}}">
+            <p class="card-text">Click here to read the full story!</p>
+            </a>
+        </div>
+            <div class="card-footer">
+            <small class="text-muted">Publish On:{{topic.time}}</small>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+    {% endblock %}
+</body>
