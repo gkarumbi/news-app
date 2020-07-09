@@ -1,21 +1,30 @@
 from app import app
 import urllib.request,json
-from .models import source
-from .models import article
+from .models import Source
+from .models import Article
+from .models import Topic
+from .models import Headline 
 
 Article = article.Article
-
 Source = source.Source
+Headline = headline.Headline
+Topic = topic.Topic
 
 # Getting api key
-api_key = app.config['NEWS_API_KEY']
+api_key = None
 
 #Getting source url
 
-source_url = app.config["NEWS_SOURCE_URL"]
+source_url = None
 
 #Getting topic url
-topic_url =
+topic_url = None
+
+def configure_request(app):
+    global api_key,source_url,topic_url
+    api_key = app.config['NEWS_API_KEY']
+    source_url = app.config["NEWS_SOURCE_URL"]
+    topic_url = app.config["TOPIC_API_URL"]
 
 def get_news_source():
     '''
@@ -104,6 +113,43 @@ def get_news_by_topic(topic_name):
 
         if get_topic_response['articles']:
             get_topic_list = get_topic_response['articles']
-            get_topic_results = process_articles_results(get_topic_list)
+            get_topic_results = process_topic_results(get_topic_list)
 
     return get_topic_results
+
+def process_topic_results(topics):
+    '''
+    function that processes the json files of articles from the api key
+    '''
+    topic_source_results = []
+    for topic in topics:
+        author = topic.get('author')
+        description = topic.get('description')
+        time = topic.get('publishedAt')
+        url = topic.get('urlToImage')
+        image = topic.get('url')
+        title = topic.get ('title')
+
+        if url:
+            topic_objects = Topic(author,description,time,url,image,title)
+            topic_source_results.append(topic_objects)
+
+    return topic_source_results
+
+def get_trending():
+    '''
+    Function that get news
+    '''
+    get_trending_url = 'https://newsapi.org/v2/top-headlines?country=us&apiKey={}'.format(api_key)
+    print(get_trending_url)
+    with urllib.request.urlopen(get_trending_url) as url:
+        get_trending_data = url.read()
+        get_trending_response = json.loads(get_trending_data)
+
+        get_trending_results = None
+
+        if get_trending_response['articles']:
+            get_trending_list = get_trending_response['articles']
+            get_trending_results = process_articles_results(get_trending_list)
+
+    return get_trending_results
