@@ -1,0 +1,53 @@
+{% extends 'base.html'%}
+
+<!-- Content Block -->
+{% block content%}
+  
+    
+
+    
+        <h1> {{uhondo}} </h1>
+        <div class="container">
+            <div class="row main-row">
+                <div class="col-md-3 sources-column">
+                    <div class="card-column">
+                        <div class="card-header">
+                            <h3>All our news sources</h3>
+                        </div>
+                        <div class="list-group list-group-flush scrolly">
+                            <ul>
+                            {% for source in sources_in_html %}
+                            <a href="/source/{{source.id}}">
+                                <p class="text-capitalize text-muted">{{source.id}}</p>
+                            </a>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-9 headline-row">
+                    <h1 class="text-center">Trending News</h1>
+                    <div class="container">
+                        {% for trending in trending_in_html%}
+                        <div class="card">
+                            <img src="{{trending.image}}" alt="" size="100px180">
+                            <div class="card-body">
+                                <h4 class="card-title">{{trending.author}}</h4>
+                                <p class="card-text">{{trending.description}}</p>
+                                <a href="{{trending.url}}"><p class="card-text">Click here to  read the whole story</p></a>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">Published On:{{trending.time}}</small>
+                            </div>                          
+                           
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    
+
+{% endblock %}
